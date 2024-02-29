@@ -28,7 +28,7 @@ port=1522:1521
 > 오라클 설치 순서
  $ make_ora12.sh                      -- Docker 이미지 파일 생성
  $ run_ora12.sh start                 -- ora12 Docker 이미지 실행
- $ podman exec -it co_ora12 bash      -- ora12 설치 프로그램이 백그라운드 작업이라 직접 실행
+ $ podman exec -it ora12 bash         -- ora12 설치 프로그램이 백그라운드 작업이라 직접 실행
    >$ su - oracle
    >$ $ORACLE_BASE/database/runInstaller -silent -ignoreSysPrereqs -showProgress -responseFile $ORACLE_BASE/db_install.rsp
    > # 이하 root 에서 실행
