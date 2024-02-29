@@ -17,7 +17,7 @@ port=1522:1521
  ├─ make_ora12.sh                # ora12 이미지 생성 쉘 스크립트
  ├─ run_db.sh                    # ora12 DB & Listener start / stop
  ├─ run_ora12.sh                 # ora12 이미지 실행 start / stop
- ├─ data	                       # oracle 데이터 보관 폴더 (실행 시 oracle 데이터베이스 저장소)
+ ├─ data                         # oracle 데이터 보관 폴더 (실행 시 oracle 데이터베이스 저장소)
  └┬ copy_files                   # ora12 설치 파일 폴더
    ├─ db_install.rsp                   # oracle 설치정보 설정 파일
    ├─ dbca.rsp                         # oracle DB 생성정보 설정 파일 - ORCL
@@ -49,7 +49,7 @@ port=1522:1521
       >$ cp /data/oratab ~
       >$ logout
     $ sudo chown -R <uid>:<uid> copy_files     # copy_files 사용자 권한 복귀
-	$ rm -rf copy_files/database               # oracle 설치 파일 삭제
+    $ rm -rf copy_files/database               # oracle 설치 파일 삭제
 
   2. 컴포넌트 저장
     $ podman commit ora12 ora12:install        # 현재 컴포넌트를 ora12:install 이미지로 저장 
