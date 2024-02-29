@@ -1,0 +1,49 @@
+*** oracle database 12.2.0.1
+
+> 환경
+ORACLE_BASE=/app/oracle
+ORACLE_HOME=/app/oracle/product/12.2/dbhome_1
+ORACLE_SID=orcl
+
+hostname=orc12
+port=1522:1521
+
+ ┬ ora12
+ ├─ Dockerfile                    -- ora12 이미지 생성용 Dockerfile
+ ├─ create_db.sh                  -- ora12 DB 생성 쉘 스크립트
+ ├─ make_ora12.sh                 -- ora12 이미지 생성 쉘 스크립트
+ ├─ run_db.sh                     -- ora12 DB & Listener start / stop
+ ├─ run_ora12.sh                  -- ora12 이미지 실행 start / stop
+ ├─ oradata	                  -- oracle 데이터 보관 폴더 (shared 실행 시)
+ └┬ copy_files                    -- ora12 복사 파일
+  ├─ .bash_profile                    -- oracle 사용자 쉘 스크립트
+  ├─ db_install.rsp                   -- oracle 설치정보 설정 파일
+  ├─ dbca.rsp                         -- oracle DB 생성정보 설정 파일 - ORCL
+  ├─ linuxx64_12201_database.zip      -- oracle database 12.2.0.1
+  ├─ listener.ora                     -- oracle listener 파일
+  ├─ netca.rsp                        -- oracle listener 설치정보 파일
+  ├─ oratab                           -- dbstart / dbshut 설정 파일
+  └─ tbsnames.ora                     -- oracle tnsnames 파일
+
+> 오라클 설치 순서
+ $ make_ora12.sh                      -- Docker 이미지 파일 생성
+ $ run_ora12.sh start                 -- ora12 Docker 이미지 실행
+ $ podman exec -it co_ora12 bash      -- ora12 설치 프로그램이 백그라운드 작업이라 직접 실행
+   >$ su - oracle
+   >$ $ORACLE_BASE/database/runInstaller -silent -ignoreSysPrereqs -showProgress -responseFile $ORACLE_BASE/db_install.rsp
+   > # 이하 root 에서 실행
+   >$ /app/oracle/oraInventory/orainstRoot.sh
+   >$ /app/oracle/product/12.2/dbhome_1/root.sh
+   >$ rm -rf /app/oracle/database
+   >$ rm -f /app/oracle/db_install.rsp
+   
+ $ create_db.sh	                      -- ora12 DB & Listener 설치 및 실행
+ 
+ > Component 저장
+ $ podman tag ora12 ora12:YYYYMMDD    -- 백업
+ $ podman commit ora12 ora12          -- 현재 버전을 이미지 복제
+ 
+ > ora12 실행 및 종료
+ $ run_ora12.sh start | stop | status -- ora12 Docker 이미지 실행 및 중지
+ $ run_db.sh start | stop             -- ora12 DB & Listener 실행 및 중지
+
