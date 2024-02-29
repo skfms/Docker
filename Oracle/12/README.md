@@ -1,34 +1,39 @@
-*** oracle database 12.2.0.1
+# Oracle Database 12.2.0.1
 
-> 설치 : WSL2
+## 설치 : WSL2
 
-> 환경
-ORACLE_BASE=/app/oracle
-ORACLE_HOME=/app/oracle/product/12.2/dbhome_1
-ORACLE_SID=orcl
+## 환경
+  
+    ORACLE_BASE=/app/oracle<br/>
+    ORACLE_HOME=/app/oracle/product/12.2/dbhome_1<br/>
+    ORACLE_SID=orcl
 
-hostname=orc12
-port=1522:1521
+    hostname=orc12<br/>
+    port=1522:1521
 
- ┬ ora12
- ├─ Dockerfile                   # ora12 이미지 생성용 Dockerfile
- ├─ README                       # 설명 문서
- ├─ install_ora12.sh             # ora12 설치용 이미지 생성 쉘 스크립트
- ├─ make_ora12.sh                # ora12 이미지 생성 쉘 스크립트
- ├─ run_db.sh                    # ora12 DB & Listener start / stop
- ├─ run_ora12.sh                 # ora12 이미지 실행 start / stop
- ├─ data                         # oracle 데이터 보관 폴더 (실행 시 oracle 데이터베이스 저장소)
- └┬ copy_files                   # ora12 설치 파일 폴더
-   ├─ db_install.rsp                   # oracle 설치정보 설정 파일
-   ├─ dbca.rsp                         # oracle DB 생성정보 설정 파일 - ORCL
-   ├─ linuxx64_12201_database.zip      # oracle database 12.2.0.1
-   ├─ listener.ora                     # oracle listener 파일
-   ├─ netca.rsp                        # oracle listener 설치정보 파일
-   ├─ oratab                           # dbstart / dbshut 설정 파일
-   └─ tbsnames.ora                     # oracle tnsnames 파일
+## 구성
 
-> 오라클 설치 순서
+    ┬ ora12<br/>
+    ├─ Dockerfile           # ora12 이미지 생성용 Dockerfile
+    ├─ README               # 설명 문서
+    ├─ install_ora12.sh     # ora12 설치용 이미지 생성 쉘 스크립트
+    ├─ make_ora12.sh        # ora12 이미지 생성 쉘 스크립트
+    ├─ run_db.sh            # ora12 DB & Listener start / stop
+    ├─ run_ora12.sh         # ora12 이미지 실행 start / stop
+    ├─ data                 # oracle 데이터 보관 폴더 (실행 시 oracle 데이터베이스 저장소)
+    └┬ copy_files           # ora12 설치 파일 폴더
+     ├─ db_install.rsp               # oracle 설치정보 설정 파일
+     ├─ dbca.rsp                     # oracle DB 생성정보 설정 파일 - ORCL
+     ├─ linuxx64_12201_database.zip  # oracle database 12.2.0.1
+     ├─ listener.ora                 # oracle listener 파일
+     ├─ netca.rsp                    # oracle listener 설치정보 파일
+     ├─ oratab                       # dbstart / dbshut 설정 파일
+     └─ tbsnames.ora                 # oracle tnsnames 파일
+
+## 오라클 설치 순서
+
   1. oracle 설치
+     
     $ make_ora12.sh                            # Docker 이미지 파일 생성
     $ install_ora12.sh                         # oracle 설치하기 위해 이미지 실행 : ./copy_files mount
     $ podman exec -it ora12 bash
@@ -37,7 +42,7 @@ port=1522:1521
       >$ logout                                    # oracle
       >$ cd /data
       >$ unzip linuxx64_12201_database.zip         # oracle 12 설치 본 압축해제
-      >$ cd $ORACLE_BASE
+      >$ cd $ORACLE_BAS
       >$ /data/database/runInstaller -silent -ignoreSysPrereqs -showProgress -responseFile /data/db_install.rsp    # oracle 설치
       >$ su                                        # root
       >$ /app/oracle/oraInventory/orainstRoot.sh
@@ -52,12 +57,14 @@ port=1522:1521
     $ rm -rf copy_files/database               # oracle 설치 파일 삭제
 
   2. 컴포넌트 저장
-    $ podman commit ora12 ora12:install        # 현재 컴포넌트를 ora12:install 이미지로 저장 
+     
+    $ podman commit ora12 ora12:install        # 현재 컴포넌트를 ora12:install 이미지로 저장
     $ podman rm -f ora12                       # 컴포넌트 종료
     $ podman rmi ora12:latest                  # 초기 이미지 삭제
     $ podman tag ora12:install ora12:latest    # ora12:install 이미지를 ora12:latest tagging
 
   3. oracle database 생성
+     
     $ run_ora12.sh start                       # oracle 이미지 실행 : /data mount - 오라클 데이터 저장소
     $ podman exec -it ora12 bash
       >$ su                                        # root
@@ -70,13 +77,16 @@ port=1522:1521
       >$ logout
 
   4. 오라클 최종본 저장
+     
     $ run_db.sh stop                           # oracle DB & Listener 실행 중지
     $ podman commit ora12 ora12:latest         # 최종 컨테이너를 이미지로 저장
     $ run_ora12.sh stop                        # 현재 컨테이너를 종료
 
-> 오라클 실행 및 중지
-  $ run_ora12.sh start
-  $ run_db.sh start
-  $ run_db.sh stop
-  $ run_ora12.sh stop
+## 오라클 실행 및 중지
+
+    $ run_ora12.sh start
+    $ run_db.sh start
+    $ run_db.sh stop
+    $ run_ora12.sh stop
+  
 
