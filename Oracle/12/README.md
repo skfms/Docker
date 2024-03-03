@@ -4,11 +4,11 @@
 
 ## 환경
   
-    ORACLE_BASE=/app/oracle<br/>
-    ORACLE_HOME=/app/oracle/product/12.2/dbhome_1<br/>
+    ORACLE_BASE=/app/oracle
+    ORACLE_HOME=/app/oracle/product/12.2/dbhome_1
     ORACLE_SID=orcl
 
-    hostname=orc12<br/>
+    hostname=orc12
     port=1522:1521
 
 ## 구성
@@ -28,7 +28,7 @@
      ├─ listener.ora                 # oracle listener 파일
      ├─ netca.rsp                    # oracle listener 설치정보 파일
      ├─ oratab                       # dbstart / dbshut 설정 파일
-     └─ tbsnames.ora                 # oracle tnsnames 파일
+     └─ tnsnames.ora                 # oracle tnsnames 파일
 
 ## 오라클 설치 순서
 
@@ -73,7 +73,7 @@
       >$ dbca -silent -createDatabase -responsefile $ORACLE_HOME/assistants/dbca/dbca.rsp    # 데이터베이스(orcl) 생성
       >$ netca -silent -responseFile $ORACLE_HOME/assistants/netca/netca.rsp                 # 리스너 생성
       >$ mv ~/*.ora $ORACLE_HOME/network/admin     # listener.ora, tnsnames.ora 파일 변경
-      >$ cat ~/oratab > /etc/oratab                # dbstart / sdshut 가능하게 설정
+      >$ cat ~/oratab > /etc/oratab                # dbstart / ddshut 가능하게 설정
       >$ logout
 
   4. 오라클 최종본 저장
