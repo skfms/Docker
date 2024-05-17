@@ -6,16 +6,20 @@ env="-e TZ=Asia/Seoul -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRESQL_PASSWORD=
 
 case "$1" in
         'start')
+				echo "*** Start $cname !"
                 podman run -d -p 127.0.0.1:5432:5432 --name $cname $env --hostname $cname $volnm $cname
+				podman ps -f name=$cname
                 ;;
 
         'stop')
-                podman stop $cname && podman rm $cname
+                podman stop $cname > /dev/null  && podman rm $cname > /dev/null
+				echo "*** Stop $cname !"
 				#pnum=`netstat -nltp 2> /dev/null | grep 3306 | awk {'print $7;}' | awk -F'/' '{print $1;}'`
 				#kill $pnum
                 ;;
 
         'status')
+				podman ps -f name=$cname
                 ;;
 
         *)
@@ -24,8 +28,5 @@ case "$1" in
                 ;;
 
 esac
-
-echo ''
-podman ps
 
 exit 0;
