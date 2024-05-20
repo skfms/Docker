@@ -1,0 +1,14 @@
+version: '3.1'
+services:
+ mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    ports:
+        - 127.0.0.1:3306:3306
+    volumes: 
+        - /home/leegs/Docker/MariaDB/data:/var/lib/mysql
+    environment:
+        TZ: Asia/Seoul
+        MARIADB_ROOT_PASSWORD: pwd
+        MARIADB_DATABASE: test
