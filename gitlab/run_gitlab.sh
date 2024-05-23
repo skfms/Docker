@@ -1,6 +1,7 @@
 #!/bin/sh
 
-cname="gitlab-ce";
+cname="gitlab";
+iname="gitlab-ce:17.0.1-ce.0";
 ports="-p 2022:22 -p 2080:80 -p 20443:443";
 volnm="-v /home/leegs/Docker/gitlab/data/config:/etc/gitlab \
 -v /home/leegs/Docker/gitlab/data/logs:/var/log/gitlab \
@@ -10,7 +11,7 @@ env="-e TZ=Asia/Seoul --restart always --privileged";
 case "$1" in
         'start')
 				echo "***Start $cname !"
-                podman run -d $ports  --name $cname $env --hostname $cname $volnm $cname
+                podman run -d $ports  --name $cname $env --hostname $cname $volnm $iname
 				podman ps -f name=$cname
                 ;;
 
