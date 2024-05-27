@@ -23,8 +23,8 @@ RUN dnf -y install \
 RUN echo -e 'root:rootpwd' | chpasswd
 
 # oracle user setting
-RUN groupadd dba
-RUN useradd -g dba oracle
+RUN groupadd -g 1000 dba
+RUN useradd -g 1000 -G dba oracle
 
 RUN echo "" >> /home/oracle/.bashrc
 RUN echo "export ORACLE_BASE=/app/oracle" >> /home/oracle/.bashrc

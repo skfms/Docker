@@ -38,11 +38,12 @@
     $ install_ora12.sh                         # oracle 설치하기 위해 이미지 실행 : ./copy_files mount
     $ podman exec -it ora12 bash
       >$ su                                        # root
-      >$ chown -R oralce:dba /data                 # mount 디렉토리 권한 변경
+      >$ chown -R oracle:dba /data                 # mount 디렉토리 권한 변경
       >$ logout                                    # oracle
       >$ cd /data
       >$ unzip linuxx64_12201_database.zip         # oracle 12 설치 본 압축해제
-      >$ cd $ORACLE_BAS
+      >$ cd $ORACLE_BASE
+	  >$ cp /data/db_install.rsp .
       >$ /data/database/runInstaller -silent -ignoreSysPrereqs -showProgress -responseFile /data/db_install.rsp    # oracle 설치
       >$ su                                        # root
       >$ /app/oracle/oraInventory/orainstRoot.sh
@@ -58,10 +59,8 @@
 
   2. 컴포넌트 저장
      
-    $ podman commit ora12 ora12:install        # 현재 컴포넌트를 ora12:install 이미지로 저장
+    $ podman commit ora12 ora12:latest         # 현재 컴포넌트를 ora12:latest 이미지로 저장
     $ podman rm -f ora12                       # 컴포넌트 종료
-    $ podman rmi ora12:latest                  # 초기 이미지 삭제
-    $ podman tag ora12:install ora12:latest    # ora12:install 이미지를 ora12:latest tagging
 
   3. oracle database 생성
      

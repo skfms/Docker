@@ -1,1 +1,1 @@
-podman build -t ora12 ~/Docker/Oracle/12
+podman build -t ora12 -f Oracle12.Dockerfile

@@ -10,8 +10,8 @@ case "$1" in
 
 	'stop')
 		podman stop $cname && podman rm $cname
-		pnum=`netstat -nltp 2> /dev/null | grep 1521 | awk {'print $7;}' | awk -F'/' '{print $1;}'`
-		kill $pnum
+		#pnum=`netstat -nltp 2> /dev/null | grep 1521 | awk {'print $7;}' | awk -F'/' '{print $1;}'`
+		#kill $pnum
 		;;
 
 	'status')
