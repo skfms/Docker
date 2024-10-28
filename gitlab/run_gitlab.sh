@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cname="gitlab";
-iname="gitlab-ce:17.0.1-ce.0";
+iname="gitlab-ce:17.5.1-ce.0";
 ports="-p 2022:22 -p 2080:80 -p 20443:443";
 volnm="-v /home/leegs/Docker/gitlab/data/config:/etc/gitlab \
 -v /home/leegs/Docker/gitlab/data/logs:/var/log/gitlab \
