@@ -7,5 +7,5 @@ Docker 설치 프로그램
 + MariaDB
 + Oracle (12)
 + ProstgreSQL
-+ gitlab (17.0.1-ce.0)
++ gitlab (17.5.1-ce.0)
 
