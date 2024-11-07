@@ -9,7 +9,7 @@
     ORACLE_SID=orcl
 
     hostname=orc12
-    port=1522:1521
+    port=1512:1521
 
 ## 구성
 
@@ -54,17 +54,21 @@
       ># cp /data/*.ora ~
       >$ cp /data/oratab ~
       >$ logout
-    $ sudo chown -R <uid>:<uid> copy_files     # copy_files 사용자 권한 복귀
-    $ rm -rf copy_files/database               # oracle 설치 파일 삭제
-
+    
   2. 컴포넌트 저장
      
     $ podman commit ora12 ora12:latest         # 현재 컴포넌트를 ora12:latest 이미지로 저장
     $ podman rm -f ora12                       # 컴포넌트 종료
 
-  3. oracle database 생성
+  3. 원복
      
-    $ run_ora12.sh start                       # oracle 이미지 실행 : /data mount - 오라클 데이터 저장소
+    $ sudo chown -R <uid>:<uid> copy_files     # copy_files 사용자 권한 복귀
+    $ rm -rf copy_files/database               # oracle 설치 파일 삭제
+
+  4. oracle database 생성
+     
+    $ mkdir -p ./data/oradata                  # Database 폴더 생성
+	$ run_ora12.sh start                       # oracle 이미지 실행 : /data mount - 오라클 데이터 저장소
     $ podman exec -it ora12 bash
       >$ su                                        # root
       >$ chown oracle:dba $ORACLE_BASE/oradata     # mount 저장소를 oracle user로 변경

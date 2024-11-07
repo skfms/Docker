@@ -1,4 +1,5 @@
-FROM docker.io/library/centos
+#FROM docker.io/library/centos
+FROM docker.io/library/centos:centos8.4.2105
 
 # centos-stream url change
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-*
