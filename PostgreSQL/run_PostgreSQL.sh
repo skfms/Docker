@@ -2,7 +2,7 @@
 
 cname="postgres";
 volnm="-v /home/leegs/Docker/PostgreSQL/data/pgdata:/var/lib/postgresql/data postgres";
-env="-e TZ=Asia/Seoul -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRESQL_PASSWORD=pwd -e PGDATA=/var/lib/postgresql/data/pgdata";
+env="-e TZ=Asia/Seoul -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRESQL_PASSWORD=pgpwd -e PGDATA=/var/lib/postgresql/data/pgdata";
 
 case "$1" in
 	'start')
